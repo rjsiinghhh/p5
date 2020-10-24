@@ -1,0 +1,13 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteRule ^regift$ controllers/regift.php?action=index
+
+RewriteCond %{REQUEST_METHOD} ^POST$
+RewriteRule ^regift$ controllers/regift.php?action=create
+
+RewriteCond %{REQUEST_METHOD} ^PUT$
+RewriteRule ^regift/([0-9]+)$ controllers/regift.php?action=update&id=$1
+
+RewriteCond %{REQUEST_METHOD} ^DELETE$
+RewriteRule ^regift/([0-9]+)$ controllers/regift.php?action=delete&id=$1
