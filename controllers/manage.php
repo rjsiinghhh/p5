@@ -3,32 +3,31 @@
 
 header('Content-Type: application/json');
 
-include_once __DIR__ . '/../models/regftr.php';
+include_once __DIR__ . '/../models/farm.php';
 
 if($_REQUEST['action']==='index'){
-  echo json_encode( Gifts::all());
+  echo json_encode( Months::all());
 
 
 
   }else if ($_REQUEST['action'] === 'create'){
     $request_body = file_get_contents('php://input');
     $body_object = json_decode($request_body);
-    $new_gift = new Gift(null, $body_object->name, $body_object->description, $body_object->price, $body_object->event, $body_object->gift_from); //create a new Person from $body_object
-    //print_r($new_person);
-    $all_gifts= Gifts::create($new_gift);
-    echo json_encode($all_gifts);
+    $new_month = new Month(null, $body_object->address, $body_object->type, $body_object->image, $body_object->elect, $body_object->diesel, $body_object->water, $body_object->equip, $body_object->main_repairs, $body_object->chem_fert, $body_object->mort_insur, $body_object->labor_contr, $body_object->labor_in, $body_object->misc, $body_object->harvest);
+    $all_months= Months::create($new_month);
+    echo json_encode($all_months);
 
 
   }else if ($_REQUEST['action'] === 'update'){
     $request_body = file_get_contents('php://input');
     $body_object= json_decode($request_body);
-    $updated_gift = new Gift($_REQUEST['id'], $body_object->name, $body_object->description, $body_object->price, $body_object->event, $body_object->gift_from);
-    $all_gifts = Gifts::update($updated_gift);
-    echo json_encode($all_gifts);
+    $updated_month = new Month($_REQUEST['id'],$body_object->address, $body_object->type, $body_object->image, $body_object->elect, $body_object->diesel, $body_object->water, $body_object->equip, $body_object->main_repairs, $body_object->chem_fert, $body_object->mort_insur, $body_object->labor_contr, $body_object->labor_in, $body_object->misc, $body_object->harvest);
+    $all_months = Months::update($updated_month);
+    echo json_encode($all_months);
 
   } else if ($_REQUEST['action'] === 'delete'){
-  $all_gifts = Gifts::delete($_REQUEST['id']);
-  echo json_encode($all_gifts);
+  $all_months = Months::delete($_REQUEST['id']);
+  echo json_encode($all_months);
 }
 
 ?>
