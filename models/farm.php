@@ -11,30 +11,36 @@ class Month {
   public $diesel;
   public $water;
   public $equip;
-  public $main_repairs;
-  public $chem_fert;
-  public $mort_insur;
+  public $main;
+  public $repairs;
+  public $chem;
+  public $fert;
+  public $mort;
+  public $insur;
   public $labor_contr;
   public $labor_in;
   public $misc;
   public $harvest;
 
-  public function __construct($id, $address, $type, $image, $elect, $diesel, $water, $equip, $main_repairs, $chem_fert, $mort_insur, $labor_contr, $labor_in, $misc, $harvest){
-    $this-> id=$id;
-    $this-> address=$address;
-    $this-> type= $type;
-    $this-> image= $image;
-    $this-> elect= $elect;
-    $this-> diesel= $diesel;
-    $this-> water= $water;
-    $this-> equip= $equip;
-    $this-> main_repairs=$main_repairs;
-    $this-> chem_fert=$chem_fert;
-    $this-> mort_insur=$mort_insur;
-    $this-> labor_contr=$labor_contr;
-    $this-> labor_in=$labor_in;
-    $this-> misc=$misc;
-    $this-> harvest=$harvest;
+  public function __construct($id, $address, $type, $image, $elect, $diesel, $water, $equip, $main, $repairs, $chem, $fert, $mort, $insur, $labor_contr, $labor_in, $misc, $harvest){
+    $this->id=$id;
+    $this->address=$address;
+    $this->type= $type;
+    $this->image= $image;
+    $this->elect= $elect;
+    $this->diesel= $diesel;
+    $this->water= $water;
+    $this->equip= $equip;
+    $this->main=$main;
+    $this->repairs=$repairs;
+    $this->chem=$chem;
+    $this->fert=$fert;
+    $this->mort=$mort;
+    $this->insur=$insur;
+    $this->labor_contr=$labor_contr;
+    $this->labor_in=$labor_in;
+    $this->misc=$misc;
+    $this->harvest=$harvest;
   }
 
 }
@@ -49,7 +55,7 @@ class Months {
 
 
   static function create($month){
-  $query = "INSERT INTO management (address, type, image, elect, diesel, water, equip, main_repairs, chem_fert, mort_insur, labor_contr, labor_in, misc, harvest) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14 )";
+  $query = "INSERT INTO management (address, type, image, elect, diesel, water, equip, main, repairs, chem, fert, mort, insur, labor_contr, labor_in, misc, harvest) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17 )";
   $query_params = array(
     $month->address,
     $month->type,
@@ -58,9 +64,12 @@ class Months {
     intval($month->diesel),
     intval($month->water),
     intval($month->equip),
-    intval($month->main_repairs),
-    intval($month->chem_fert),
-    intval($month->mort_insur),
+    intval($month->main),
+    intval($month->repairs),
+    intval($month->chem),
+    intval($month->fert),
+    intval($month->mort),
+    intval($month->insur),
     intval($month->labor_contr),
     intval($month->labor_in),
     intval($month->misc),
@@ -73,7 +82,7 @@ class Months {
 }
 
 static function update($updated_month){
-  $query = "UPDATE management SET address = $1, type = $2, image = $3, elect =$4, diesel= $5, water =$6, equip =$7, main_repairs =$8, chem_fert =$9, mort_insur =$10, labor_contr =$11, labor_in =$12, misc =$13, harvest =$14 WHERE id = $15";
+  $query = "UPDATE management SET address = $1, type = $2, image = $3, elect =$4, diesel= $5, water =$6, equip =$7, main =$8, repairs =$9, chem =$10, fert =$11, mort=$12, insur =$13, labor_contr =$14, labor_in =$15, misc =$16, harvest =$17 WHERE id = $18";
   $query_params = array(
     $updated_month->address,
     $updated_month->type,
@@ -82,14 +91,18 @@ static function update($updated_month){
     intval($updated_month->diesel),
     intval($updated_month->water),
     intval($updated_month->equip),
-    intval($updated_month->main_repairs),
-    intval($updated_month->chem_fert),
-    intval($updated_month->mort_insur),
+    intval($updated_month->main),
+    intval($updated_month->repairs),
+    intval($updated_month->chem),
+    intval($updated_month->fert),
+    intval($updated_month->mort),
+    intval($updated_month->insur),
     intval($updated_month->labor_contr),
     intval($updated_month->labor_in),
     intval($updated_month->misc),
-    intval($updated_month->harvest));
-  pg_query_params($query,$query_params);
+    intval($updated_month->harvest),
+    intval($updated_month->id));
+  $result=pg_query_params($query,$query_params);
   return self::all();
 }
 
@@ -115,9 +128,12 @@ static function update($updated_month){
         intval($row_object->diesel),
         intval($row_object->water),
         intval($row_object->equip),
-        intval($row_object->main_repairs),
-        intval($row_object->chem_fert),
-        intval($row_object->mort_insur),
+        intval($row_object->main),
+        intval($row_object->repairs),
+        intval($row_object->chem),
+        intval($row_object->fert),
+        intval($row_object->mort),
+        intval($row_object->insur),
         intval($row_object->labor_contr),
         intval($row_object->labor_in),
         intval($row_object->misc),
