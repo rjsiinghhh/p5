@@ -1,6 +1,22 @@
 <?php
-
-$dbconn = pg_connect("host= localhost dbname=stats");
+$dbconn = null;
+if(getenv('DATABASE_URL')){ // if using the heroku database
+	$connectionConfig = parse_url(getenv('DATABASE_URL'));
+	$host = $connectionConfig['host'];
+	$user = $connectionConfig['user'];
+	$password = $connectionConfig['pass'];
+	$port = $connectionConfig['port'];
+	$dbname = trim($connectionConfig['path'],'/');
+	$dbconn = pg_connect(
+		"host=".$host." ".
+		"user=".$user." ".
+		"password=".$password." ".
+		"port=".$port." ".
+		"dbname=".$dbname
+	);
+} else { // if using the local database, change the dbname to be whatever your local database's name is
+	$dbconn = pg_connect("host=localhost dbname=stats");
+}
 
 class Month {
   public $id;
