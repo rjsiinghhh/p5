@@ -20,6 +20,7 @@ if(getenv('DATABASE_URL')){ // if using the heroku database
 
 class Month {
   public $id;
+	public $entry_date;
   public $address;
   public $type;
   public $image;
@@ -38,8 +39,9 @@ class Month {
   public $misc;
   public $harvest;
 
-  public function __construct($id, $address, $type, $image, $elect, $diesel, $water, $equip, $main, $repairs, $chem, $fert, $mort, $insur, $labor_contr, $labor_in, $misc, $harvest){
+  public function __construct($id, $entry_date, $address, $type, $image, $elect, $diesel, $water, $equip, $main, $repairs, $chem, $fert, $mort, $insur, $labor_contr, $labor_in, $misc, $harvest){
     $this->id=$id;
+		$this->entry_date=$entry_date;
     $this->address=$address;
     $this->type= $type;
     $this->image= $image;
@@ -71,8 +73,9 @@ class Months {
 
 
   static function create($month){
-  $query = "INSERT INTO management (address, type, image, elect, diesel, water, equip, main, repairs, chem, fert, mort, insur, labor_contr, labor_in, misc, harvest) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17 )";
+  $query = "INSERT INTO management (entry_date, address, type, image, elect, diesel, water, equip, main, repairs, chem, fert, mort, insur, labor_contr, labor_in, misc, harvest) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)";
   $query_params = array(
+		date($month->entry_date),
     $month->address,
     $month->type,
     $month->image,
@@ -98,8 +101,9 @@ class Months {
 }
 
 static function update($updated_month){
-  $query = "UPDATE management SET address = $1, type = $2, image = $3, elect =$4, diesel= $5, water =$6, equip =$7, main =$8, repairs =$9, chem =$10, fert =$11, mort=$12, insur =$13, labor_contr =$14, labor_in =$15, misc =$16, harvest =$17 WHERE id = $18";
+  $query = "UPDATE management SET entry_date=$1, address = $2, type = $3, image = $4, elect =$5, diesel= $6, water =$7, equip =$8, main =$9, repairs =$10, chem =$11, fert =$12, mort=$13, insur =$14, labor_contr =$15, labor_in =$16, misc =$17, harvest =$18 WHERE id = $19";
   $query_params = array(
+		date($updated_month->entry_date),
     $updated_month->address,
     $updated_month->type,
     $updated_month->image,
@@ -137,6 +141,7 @@ static function update($updated_month){
 
       $new_month = new Month(
         $row_object->id,
+				date($row_object->entry_date),
         $row_object->address,
         $row_object->type,
         $row_object->image,
